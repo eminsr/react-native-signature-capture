@@ -13,28 +13,20 @@ User would sign on the app and when you press the save button it returns the bas
 
 ## Install
 
-First you need to install react-native-signature-capture:
-
 ```sh
-npm install react-native-signature-capture --save
+yarn add github:eminsr/react-native-signature-capture
 ```
 
-Second you need to link react-native-signature-capture:
+### Manual liking:
 
-```sh
-react-native link react-native-signature-capture
-```
-
-Use above `react-native link` command to automatically complete the installation, or link manually like so:
-
-### iOS
+## iOS
 
 1. In the XCode's "Project navigator", right click on your project's Libraries folder ➜ Add Files to <...>
 2. Go to node_modules ➜ react-native-signature-capture ➜ ios ➜ select RSSignatureCapture.xcodeproj
 3. Add libRSSignatureCapture.a to Build Phases -> Link Binary With Libraries
 4. Compile and have fun
 
-### Android
+## Android
 
 Add these lines in your file: android/settings.gradle
 
