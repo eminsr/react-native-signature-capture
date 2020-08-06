@@ -165,8 +165,7 @@ public class RSSignatureCaptureMainView extends LinearLayout implements OnClickL
     }
 
     // set the file name of your choice
-    String currentDate = (String) new Date().getTime();
-    String fname = currentDate + "-signature.png";
+    String fname = new Date().getTime() + "-signature.png";
     // in our case, we delete the previous file, you can remove this
     File file = new File(myDir, fname);
     if (file.exists()) {
