@@ -3,12 +3,13 @@
   "version": "0.4.10",
   "description": "Lets users sign their signatures",
   "main": "SignatureCapture.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RepairShopr/react-native-signature-capture.git"
+    "url": "git+https://github.com/eminsr/react-native-signature-capture.git"
   },
   "keywords": [
     "react-component",
@@ -19,12 +20,12 @@
   "peerDependencies": {
     "react-native": ">=0.47"
   },
-  "author": "RepairShopr",
+  "author": "eminsr",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/RepairShopr/react-native-signature-capture/issues"
+    "url": "https://github.com/eminsr/react-native-signature-capture/issues"
   },
-  "homepage": "https://github.com/RepairShopr/react-native-signature-capture#readme",
+  "homepage": "https://github.com/eminsr/react-native-signature-capture#readme",
   "dependencies": {
     "prop-types": "^15.5.10"
   }
