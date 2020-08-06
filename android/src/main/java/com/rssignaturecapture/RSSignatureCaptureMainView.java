@@ -1,5 +1,8 @@
 package com.rssignaturecapture;
 
+import android.annotation.SuppressLint;
+import android.os.Build;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.ViewGroup;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
@@ -28,6 +31,8 @@ import android.widget.LinearLayout;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import java.lang.Boolean;
+import java.util.Date;
+import java.util.Random;
 
 public class RSSignatureCaptureMainView extends LinearLayout implements OnClickListener,RSSignatureCaptureView.SignatureCallback {
   LinearLayout buttonsLayout;
@@ -67,6 +72,7 @@ public class RSSignatureCaptureMainView extends LinearLayout implements OnClickL
     this.saveFileInExtStorage = saveFileInExtStorage;
   }
 
+  @SuppressLint("SourceLockedOrientationActivity")
   public void setViewMode(String viewMode) {
     this.viewMode = viewMode;
 
@@ -139,8 +145,17 @@ public class RSSignatureCaptureMainView extends LinearLayout implements OnClickL
    */
   final void saveImage() {
 
-    String root = Environment.getExternalStorageDirectory().toString();
-
+    File rootFile;
+    if (saveFileInExtStorage) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            rootFile = mActivity.getExternalFilesDir(Environment.MEDIA_MOUNTED);
+        } else {
+            rootFile = Environment.getExternalStorageDirectory();
+        }
+    } else {
+        rootFile = mActivity.getCacheDir();
+    }
+    String root = rootFile.toString();
     // the directory where the signature will be saved
     File myDir = new File(root + "/saved_signature");
 
@@ -150,8 +165,9 @@ public class RSSignatureCaptureMainView extends LinearLayout implements OnClickL
     }
 
     // set the file name of your choice
-    String fname = "signature.png";
-
+    String date = (String) DateFormat.format("yyyykkmm",new Date());
+    String randomPath =  String.format("%s",new Random().nextInt(10) + 10);
+    String fname = date + randomPath + ".signature.png";
     // in our case, we delete the previous file, you can remove this
     File file = new File(myDir, fname);
     if (file.exists()) {
@@ -162,13 +178,10 @@ public class RSSignatureCaptureMainView extends LinearLayout implements OnClickL
 
       Log.d("React Signature", "Save file-======:" + saveFileInExtStorage);
       // save the signature
-      if (saveFileInExtStorage) {
-        FileOutputStream out = new FileOutputStream(file);
-        this.signatureView.getSignature().compress(Bitmap.CompressFormat.PNG, 90, out);
-        out.flush();
-        out.close();
-      }
-
+      FileOutputStream cachedOut = new FileOutputStream(file);
+      this.signatureView.getSignature().compress(Bitmap.CompressFormat.PNG, 90, cachedOut);
+      cachedOut.flush();
+      cachedOut.close();
 
       ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
       Bitmap resizedBitmap = getResizedBitmap(this.signatureView.getSignature());
