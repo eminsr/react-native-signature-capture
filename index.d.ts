@@ -67,7 +67,7 @@ export interface SignatureCaptureProps extends ViewProps {
   onDragEvent?(event: any): void;
 }
 
-interface SaveEventParams {
+export interface SaveEventParams {
   /**
   * The file path name
   */
